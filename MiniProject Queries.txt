@@ -1,0 +1,43 @@
+SQL> Create table employee_master(employee_id NUMBER(5) primary key,employee_name varchar2(50),password varchar2(20),role varchar2(20));
+
+Table created.
+
+SQL> desc employee_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ EMPLOYEE_ID                               NOT NULL NUMBER(5)
+ EMPLOYEE_NAME                                      VARCHAR2(50)
+ PASSWORD                                           VARCHAR2(20)
+ ROLE                                               VARCHAR2(20)
+
+
+SQL> create sequence seq_course start with 10000 maxvalue 99999 increment by 1 nocycle;
+
+Sequence created.
+
+create sequence seq_training start with 10000 maxvalue 99999 increment by 1 nocycle;
+
+
+
+SQL> create table course_master(course_id number(5) primary key,course_name varchar2(50),no_of_days number(5));
+
+Table created.
+
+SQL> desc course_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ COURSE_ID                                 NOT NULL NUMBER(5)
+ COURSE_NAME                                        VARCHAR2(50)
+ NO_OF_DAYS                                         NUMBER(5)
+SQL> set linesize 400;
+SQL> create table training_master(training_code number(5) primary key, course_code references course_master(course_id),faculty_code references employee_master(employee_id),start_date date, end_date date);
+
+Create table faculty_skill(faculty_id references employee_master(employee_id), skill_set varchar2(200));
+
+
+Create table PARTICIPANT_ENROLLMENT(training_code references training_master(training_code), participant_id references employee_master(employee_id));
+
+Create table FEEDBACK_MASTER(training_code references training_master(training_code), participant_id references employee_master(employee_id), FB_Prs_comm number(1), FB_Clrfy_dbts number(1), FB_TM number(1), FB_Hnd_out number(1), FB_Hw_Sw_Ntwrk number(1), Comments varchar2(200), Suggestions varchar2(200));
+
